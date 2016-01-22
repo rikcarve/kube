@@ -25,3 +25,6 @@ docker run --net=host kubectl get svc -o json
 
 
 docker run --net=host -v //c/Users/arikd/dev/kubenetes/:/var/data kube create -f //var/data/hello_rc.yaml
+
+docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kube create -f //var/data/hello_rc.yaml
+docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kube create -f //var/data/hello_svc.yaml

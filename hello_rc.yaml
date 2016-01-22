@@ -3,18 +3,24 @@ kind: ReplicationController
 metadata:
   name: hello
   labels:
-    name: hello
+    run: hello
 spec:
   replicas: 2
   selector:
-    name: hello
+    run: hello
   template:
     metadata:
       labels:
-        name: hello
+        run: hello
     spec:
       containers:
       - name: hello
         image: hello
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+            path: /hello/v1/hello
+            port: 8080
+          initialDelaySeconds: 20
+          timeoutSeconds: 1

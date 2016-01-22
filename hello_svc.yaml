@@ -3,12 +3,12 @@ kind: Service
 metadata:
   name: hello
   labels:
-    name: hello
+    run: hello
 spec:
   ports:
   - port: 8080
     targetPort: 8080
+    protocol: TCP
   selector:
-    name: hello
-  externalIPs:
-    - 192.168.99.100
+    run: hello
+  type: NodePort
