@@ -1,4 +1,4 @@
-docker run --net=host -d gcr.io/google_containers/etcd:2.0.12 //usr/local/bin/etcd --addr=127.0.0.1:4001 --bind-addr=0.0.0.0:4001 --data-dir=//var/etcd/data
+docker run --net=host -d gcr.io/google_containers/etcd:2.2.1 //usr/local/bin/etcd --addr=127.0.0.1:4001 --bind-addr=0.0.0.0:4001 --data-dir=//var/etcd/data
 docker run \
     --volume=//:/rootfs:ro \
     --volume=//sys:/sys:ro \
@@ -10,6 +10,6 @@ docker run \
     --pid=host \
     --privileged=true \
     -d \
-    gcr.io/google_containers/hyperkube:v1.1.4 \
-    //hyperkube kubelet --containerized --hostname-override="127.0.0.1" --address="0.0.0.0" --api-servers=http://localhost:8080 --config=//etc/kubernetes/manifests 
-docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v1.1.4 //hyperkube proxy --master=http://127.0.0.1:8080 --v=2
+    gcr.io/google_containers/hyperkube:v1.1.7 \
+    //hyperkube kubelet --containerized --enable_server --hostname-override="127.0.0.1" --address="0.0.0.0" --api-servers=http://127.0.0.1:8080 --v=2 --config=//etc/kubernetes/manifests --cluster-dns=10.0.0.10 --cluster-domain=cluster.local
+docker run -d --net=host --privileged --pid=host gcr.io/google_containers/hyperkube:v1.1.7 //hyperkube proxy --master=http://127.0.0.1:8080 --v=2

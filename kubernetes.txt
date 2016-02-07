@@ -14,9 +14,9 @@ docker run \
     --pid=host \
     --privileged=true \
     -d \
-    gcr.io/google_containers/hyperkube:v1.0.1 \
+    gcr.io/google_containers/hyperkube:v1.1.4 \
     //hyperkube kubelet --containerized --hostname-override="127.0.0.1" --address="0.0.0.0" --api-servers=http://localhost:8080 --config=//etc/kubernetes/manifests	
-docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v1.0.1 //hyperkube proxy --master=http://127.0.0.1:8080 --v=2
+docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v1.1.4 //hyperkube proxy --master=http://127.0.0.1:8080 --v=2
 
 
 docker run --net=host kubectl run hello --image=hello --replicas=2 --port=8080
@@ -24,7 +24,19 @@ docker run --net=host kubectl expose rc hello --port=8080 --type=NodePort
 docker run --net=host kubectl get svc -o json
 
 
-docker run --net=host -v //c/Users/arikd/dev/kubenetes/:/var/data kube create -f //var/data/hello_rc.yaml
+docker run --net=host -v //c/Users/arikd/dev/kubenetes/:/var/data kubectl create -f //var/data/hello_rc.yaml
 
-docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kube create -f //var/data/hello_rc.yaml
-docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kube create -f //var/data/hello_svc.yaml
+docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kubectl create -f //var/data/hello_rc.yaml
+docker run --net=host -v //c/Users/arikd/dev/github/kube/:/var/data kubectl create -f //var/data/hello_svc.yaml
+
+docker run --net=host gcr.io/google_containers/kube-ui:v4
+
+docker run --net=host -v //c/Users/arikd/dev/github/kubernetes/:/var/data kubectl create -f //var/data/cluster/addons/kube-ui/kube-ui-rc.yaml
+docker run --net=host -v //c/Users/arikd/dev/github/kubernetes/:/var/data kubectl create -f //var/data/cluster/addons/kube-ui/kube-ui-svc.yaml
+
+
+export KUBERNETES_MASTER=http://127.0.0.1:8080
+docker-machine.exe ssh default -f -L 8080:localhost:8080 -N
+
+kubectl --namespace=kube-system create -f kube_ui_rc.yml
+kubectl --namespace=kube-system create -f kube_ui_svc.yml
