@@ -31,7 +31,7 @@ docker run -d --net=host --privileged gcr.io/google_containers/hyperkube:v1.0.1 
 ## Download windows client (kubectl)
 https://storage.googleapis.com/kubernetes-release/release/v1.1.7/bin/windows/amd64/kubectl.exe
 
-### Setup ssh tunnel for kubectl and kube-ui
+#### Setup ssh tunnel for kubectl and kube-ui
 docker-machine.exe ssh default -f -L 8080:localhost:8080 -N
 
 ## Example image
@@ -56,7 +56,7 @@ kubectl --namespace=kube-system create -f kube_ui_svc.yml
 kubectl cluster-info
 ```
 
-## Rolling Udate
+## Rolling Update
 This is my favorite!
 Be sure to define a readinessProbe:
 ```yml
